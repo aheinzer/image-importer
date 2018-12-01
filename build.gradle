@@ -1,0 +1,41 @@
+buildscript {
+
+    ext.kotlin_version = '1.3.10'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+defaultTasks 'run'
+
+ext.main_class_name = 'ch.heinzer.import.ImageImporterKt'
+mainClassName = "$main_class_name"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.github.ajalt:clikt:1.5.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile fileTree(dir: 'lib', include: '*.jar')
+    testCompile 'junit:junit:4.11'
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+jar {
+    manifest { attributes 'Main-Class': "$main_class_name" }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
