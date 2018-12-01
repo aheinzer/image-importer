@@ -9,4 +9,3 @@ java -jar build/libs/import-all.jar \
 
 echo
 read -p "Drücke [Enter/Return] um das Fenster zu schliessen..."
-echo
