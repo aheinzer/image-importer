@@ -16,9 +16,9 @@ if (args.length < 2) {
 
 const [destDir, ...sourceDirs] = args;
 
-console.log('args: ', args);
-console.log('destDir: ', destDir);
-console.log('sourceDirs: ', sourceDirs);
+console.log(`destination dir: ${destDir}`);
+console.log(`source dirs    : ${sourceDirs}`);
+console.log('');
 
 for (sourceDir of sourceDirs) {
 
