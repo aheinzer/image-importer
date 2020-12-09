@@ -1,7 +1,9 @@
 const fs = require('fs');
-const ExifReader = require('exifreader');
+const path = require('path');
+const exifReader = require('exifreader');
 
-const args = process.argv.slice(2);
+const args = pgmArgs();
+
 if (args.length < 2) {
     console.log(`Mindestens 2 Argumente notwendig (args = ${args}): DEST_DIR SOURCE_DIRS ...`);
     process.exit(2);
@@ -9,9 +11,12 @@ if (args.length < 2) {
 
 const [destDir, ...sourceDirs] = args;
 
-console.log('destination dir: ' + destDir);
-console.log('source dirs    : ' + sourceDirs.join(', '));
-console.log('');
+console.log(`
+${boxedTitle(pgmName())}
+
+destination dir: ${destDir}
+source dirs    : ${sourceDirs.join(', ')}
+`);
 
 for (sourceDir of sourceDirs) {
 
@@ -24,26 +29,18 @@ for (sourceDir of sourceDirs) {
             if (isJpg(sourceFile)) {
 
                 const sourceFilePath = sourceDir + '/' + sourceFile;
+
                 const dateTime = exifDateTime(sourceFilePath);
                 const date = dateTime.substring(0, 8)
-                // console.log(dateTime);
-                // console.log(date);
-
 
                 const destDirWithDate = destDir + '/' + date;
                 const destFilePath = destDirWithDate + '/' + dateTime + '.jpg';
 
                 createDirIfNotExists(destDirWithDate)
 
-                var errorMessage = '';
+                const status = moveFileWithStatus(sourceFilePath, destFilePath);
 
-                if (!fs.existsSync(destFilePath)) {
-                    fs.renameSync(sourceFilePath, destFilePath);
-                } else {
-                    errorMessage = '- NOT OK, Bild existiert bereits am Zielort!';
-                }
-
-                console.log(`- ${sourceFilePath} -> ${destFilePath} ${errorMessage}`);
+                console.log(`- ${sourceFilePath} -> ${destFilePath} ${status}`);
             }
 
         });
@@ -52,10 +49,18 @@ for (sourceDir of sourceDirs) {
     }
 }
 
+function moveFileWithStatus(sourceFilePath, destFilePath) {
+    const status = !fs.existsSync(destFilePath) ? (
+        fs.renameSync(sourceFilePath, destFilePath),
+        '- OK'
+    ) : '- NOT OK, Bild existiert bereits am Zielort!';
+
+    return status;
+}
+
 function isDir(path) {
     try {
-        var stat = fs.lstatSync(path);
-        return stat.isDirectory();
+        return fs.lstatSync(path).isDirectory();
     } catch (e) {
         return false;
     }
@@ -66,19 +71,33 @@ function isJpg(file) {
 }
 
 function exifDateTime(file) {
-    const tags = ExifReader.load(fs.readFileSync(file));
+    const tags = exifReader.load(fs.readFileSync(file));
     const dateTimeOriginal = tags['DateTimeOriginal'].description;
     const dateTimeFormatted = dateTimeOriginal.replace(/(\d\d):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)/, "$1$2$3-$4$5$6")
     return dateTimeFormatted;
-}
-
-async function extractExifData(image) {
-    let output = await exifr.parse(image, ['DateTimeOriginal']);
-    return output;
 }
 
 function createDirIfNotExists(dir) {
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
     }
+}
+
+function pgmName() {
+    return path.basename(__filename);
+}
+
+function pgmArgs() {
+    return process.argv.slice(2);
+}
+
+function boxedTitle(title) {
+
+    const len = title.length
+
+    const borderLine = `+${'-'.repeat(len + 2)}+`;
+    const titleLine = `| ${title} |`;
+    const boxedTitle = `${borderLine}\n${titleLine}\n${borderLine}`;
+
+    return boxedTitle;
 }
