@@ -1,11 +1,4 @@
-// Installation:
-// - install node
-// - npm install exifreader
-//
-// Start:
-// - ./start.command
-
-var fs = require('fs');
+const fs = require('fs');
 const ExifReader = require('exifreader');
 
 const args = process.argv.slice(2);
@@ -16,8 +9,8 @@ if (args.length < 2) {
 
 const [destDir, ...sourceDirs] = args;
 
-console.log(`destination dir: ${destDir}`);
-console.log(`source dirs    : ${sourceDirs}`);
+console.log('destination dir: ' + destDir);
+console.log('source dirs    : ' + sourceDirs.join(', '));
 console.log('');
 
 for (sourceDir of sourceDirs) {
