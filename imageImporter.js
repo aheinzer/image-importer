@@ -24,9 +24,9 @@ for (sourceDir of sourceDirs) {
 
         console.log(sourceDir);
 
-        fs.readdirSync(sourceDir).forEach(sourceFile => {
-
-            if (isJpg(sourceFile)) {
+        fs.readdirSync(sourceDir)
+            .filter(sourceFile => isJpg(sourceFile))
+            .forEach(sourceFile => {
 
                 const sourceFilePath = sourceDir + '/' + sourceFile;
 
@@ -41,15 +41,15 @@ for (sourceDir of sourceDirs) {
                 const status = moveFileWithStatus(sourceFilePath, destFilePath);
 
                 console.log(`- ${sourceFilePath} -> ${destFilePath} ${status}`);
-            }
 
-        });
+            });
     } else {
         console.log(`Warnung - Verzeichnis ${dir} nicht gefunden`);
     }
 }
 
 function moveFileWithStatus(sourceFilePath, destFilePath) {
+
     const status = !fs.existsSync(destFilePath) ? (
         fs.renameSync(sourceFilePath, destFilePath),
         '- OK'
@@ -71,9 +71,11 @@ function isJpg(file) {
 }
 
 function exifDateTime(file) {
+
     const tags = exifReader.load(fs.readFileSync(file));
     const dateTimeOriginal = tags['DateTimeOriginal'].description;
     const dateTimeFormatted = dateTimeOriginal.replace(/(\d\d):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)/, "$1$2$3-$4$5$6");
+
     return dateTimeFormatted;
 }
 
