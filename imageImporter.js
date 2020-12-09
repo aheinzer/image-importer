@@ -31,12 +31,12 @@ for (sourceDir of sourceDirs) {
                 const sourceFilePath = sourceDir + '/' + sourceFile;
 
                 const dateTime = exifDateTime(sourceFilePath);
-                const date = dateTime.substring(0, 8)
+                const date = dateTime.substring(0, 8);
 
                 const destDirWithDate = destDir + '/' + date;
                 const destFilePath = destDirWithDate + '/' + dateTime + '.jpg';
 
-                createDirIfNotExists(destDirWithDate)
+                createDirIfNotExists(destDirWithDate);
 
                 const status = moveFileWithStatus(sourceFilePath, destFilePath);
 
@@ -45,7 +45,7 @@ for (sourceDir of sourceDirs) {
 
         });
     } else {
-        console.log(`Warnung - Verzeichnis ${dir} nicht gefunden`)
+        console.log(`Warnung - Verzeichnis ${dir} nicht gefunden`);
     }
 }
 
@@ -73,7 +73,7 @@ function isJpg(file) {
 function exifDateTime(file) {
     const tags = exifReader.load(fs.readFileSync(file));
     const dateTimeOriginal = tags['DateTimeOriginal'].description;
-    const dateTimeFormatted = dateTimeOriginal.replace(/(\d\d):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)/, "$1$2$3-$4$5$6")
+    const dateTimeFormatted = dateTimeOriginal.replace(/(\d\d):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)/, "$1$2$3-$4$5$6");
     return dateTimeFormatted;
 }
 
@@ -93,7 +93,7 @@ function pgmArgs() {
 
 function boxedTitle(title) {
 
-    const len = title.length
+    const len = title.length;
 
     const borderLine = `+${'-'.repeat(len + 2)}+`;
     const titleLine = `| ${title} |`;
