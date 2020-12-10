@@ -24,11 +24,11 @@ npm v
 # Dependencies runterladen
 npm install
 
-# start.command entsprechend anpassen (ZIEL- und QUELLVERZEICHNISSE)
+# startOnMac.command entsprechend anpassen (ZIEL- und QUELLVERZEICHNISSE)
 ```
 
 ## Start
 ```bash
 # Import starten
-./start.command
+./startOnMac.command
 ```
