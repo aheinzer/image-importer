@@ -4,6 +4,8 @@
 
 imageImporter verschiebt Bilder in ein ZIELVERZEICHNIS und legt diese dort chronologisch mit Datum und Zeit im Ordner- und Bildnamen ab.
 
+Dadurch können Bilder aus mehrere Quellen und Geräten chronologisch sortiert an einem Ort abgelegt werden.
+
 * imageImporter wird mit folgenden Parametern gestartet
   * 1 ZIELVERZEICHNIS (wo die Bilder hinkopiert werden sollen)
   * 1-n QUELLVERZEICHNISSEN (wo die zu verarbeitenden Bilder liegen)
