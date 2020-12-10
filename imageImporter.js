@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const exifReader = require('exifreader');
 
+const imageSuffix = 'jpg';
+
 const args = pgmArgs();
 
 if (args.length < 2) {
@@ -25,7 +27,7 @@ for (sourceDir of sourceDirs) {
         console.log(sourceDir);
 
         fs.readdirSync(sourceDir)
-            .filter(sourceFile => isJpg(sourceFile))
+            .filter(sourceFile => isImage(sourceFile))
             .forEach(sourceFile => {
 
                 const sourceFilePath = sourceDir + '/' + sourceFile;
@@ -34,13 +36,13 @@ for (sourceDir of sourceDirs) {
                 const date = dateTime.substring(0, 8);
 
                 const destDirWithDate = destDir + '/' + date;
-                const destFilePath = destDirWithDate + '/' + dateTime + '.jpg';
+                const destFilePathWithoutSuffix = destDirWithDate + '/' + dateTime;
 
                 createDirIfNotExists(destDirWithDate);
 
-                const status = moveFileWithStatus(sourceFilePath, destFilePath);
+                const destFilePathOrError = moveFileWithStatus(sourceFilePath, destFilePathWithoutSuffix, imageSuffix);
 
-                console.log(`- ${sourceFilePath} -> ${destFilePath} ${status}`);
+                console.log(`- ${sourceFilePath} -> ${destFilePathOrError}`);
 
             });
     } else {
@@ -48,14 +50,24 @@ for (sourceDir of sourceDirs) {
     }
 }
 
-function moveFileWithStatus(sourceFilePath, destFilePath) {
+function moveFileWithStatus(sourceFilePath, destFilePathWithoutSuffix, imageSuffix) {
 
-    const status = !fs.existsSync(destFilePath) ? (
-        fs.renameSync(sourceFilePath, destFilePath),
-        '- OK'
-    ) : '- NOT OK, Bild existiert bereits am Zielort!';
+    const destFilePath = destFilePathWithoutSuffix + '.' + imageSuffix;
 
-    return status;
+    try {
+        if (!fs.existsSync(destFilePath)) {
+            fs.renameSync(sourceFilePath, destFilePath);
+            return destFilePath;
+        } else {
+            const date = new Date();
+            const milliseconds = date.getMilliseconds();
+            const destFilePathWithMilliseconds = destFilePathWithoutSuffix + '-' + milliseconds + '.' + imageSuffix;
+            fs.renameSync(sourceFilePath, destFilePathWithMilliseconds);
+            return destFilePathWithMilliseconds;
+        }
+    } catch (e) {
+        return e.message;
+    }
 }
 
 function isDir(path) {
@@ -66,8 +78,8 @@ function isDir(path) {
     }
 }
 
-function isJpg(file) {
-    return file.toLowerCase().endsWith('jpg');
+function isImage(file) {
+    return file.toLowerCase().endsWith(imageSuffix);
 }
 
 function exifDateTime(file) {
