@@ -25,7 +25,6 @@ npm v
 npm install
 
 # start.command entsprechend anpassen (ZIEL- und QUELLVERZEICHNISSE)
-# (Ziel-Verezchnis und Quell-Verzeichnisse)
 ```
 
 ## Start
