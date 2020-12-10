@@ -16,7 +16,7 @@ Dadurch können Bilder aus mehrere Quellen und Geräten chronologisch sortiert a
   * dann wird pro Datum im ZIELVEREICHNIS ein Ordner angelegt im Format YYYYMMDD
   * dann wird das Bild vom QUELLVERZEICHNIS im ZIELVERZEICHNIS ins Unterverzeichnis YYYYMMDD verschoben
   * dann wird das Bild umbenannt mit Erstellungsdatum und -zeit im Format YYYYMMDD-HHMMSS.jpg
-  * falls das Bild bereits im ZIELVERZEICHNIS existiert, so werden im Name noch die aktuellen Millisekunden angehängt im Format YYYYMMDD-HHMMSS-SSS.jpg
+  * falls das Bild bereits im ZIELVERZEICHNIS existiert, so werden im Namen noch die aktuellen Millisekunden angehängt im Format YYYYMMDD-HHMMSS-SSS.jpg
   * pro Bild wird eine Ausgabe geloggt
 
 ## Installation
