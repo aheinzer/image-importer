@@ -6,7 +6,7 @@ echo
 # imageImporter.js ZIELVERZEICHNIS QUELLVERZEICHNIS [QUELLVERZEICHNIS ...]
 
 time node ./imageImporter.js \
-  $HOME/OneDrive/Fotos/2020 \
+  $HOME/OneDrive/Fotos/2021 \
   $HOME/Desktop \
   $HOME/Downloads
 
