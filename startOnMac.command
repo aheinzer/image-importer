@@ -7,6 +7,7 @@ echo
 
 time node ./imageImporter.js \
   $HOME/Tresors/Fotos/2021 \
+  $HOME/Tresors/Camera\ Uploads \
   $HOME/Desktop \
   $HOME/Downloads
 
