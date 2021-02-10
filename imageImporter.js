@@ -32,7 +32,17 @@ for (sourceDir of sourceDirs) {
 
                 const sourceFilePath = sourceDir + '/' + sourceFile;
 
-                const dateTime = exifDateTime(sourceFilePath);
+                var dateTime
+                try {
+                    dateTime = exifDateTime(sourceFilePath);
+                } catch (e) {
+                    dateTime = new Date()
+                        .toJSON()
+                        .slice(0, 19)
+                        .replace(/-/g, '')
+                        .replace('T', '-')
+                        .replace(/:/g, '')
+                }
                 const date = dateTime.substring(0, 8);
 
                 const destDirWithDate = destDir + '/' + date;
