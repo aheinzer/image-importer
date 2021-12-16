@@ -6,7 +6,6 @@
   "dependencies": {
     "exifreader": "^4.1.0"
   },
-  "devDependencies": {},
   "bin": {
     "image-importer": "./image-importer.js"
   },
