@@ -4,7 +4,7 @@
   "description": "Rename and Move Image Files",
   "main": "image-importer.js",
   "dependencies": {
-    "exifreader": "^3.12.6"
+    "exifreader": "^4.1.0"
   },
   "devDependencies": {},
   "bin": {
