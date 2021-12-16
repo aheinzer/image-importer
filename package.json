@@ -1,6 +1,6 @@
 {
   "name": "image-importer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Rename and Move Image Files",
   "main": "image-importer.js",
   "dependencies": {
