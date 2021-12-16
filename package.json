@@ -1,23 +1,22 @@
 {
-  "name": "imageimporter",
+  "name": "image-importer",
   "version": "1.0.0",
   "description": "Rename and Move Image Files",
-  "main": "imageImporter.js",
+  "main": "image-importer.js",
   "dependencies": {
     "exifreader": "^3.12.6"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+    "image-importer": "./image-importer.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/aheinzer/ImageImporter.git"
+    "url": "https://github.com/aheinzer/image-importer.git"
   },
   "author": "Armin Heinzer",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/aheinzer/ImageImporter/issues"
-  },
-  "homepage": "https://gitlab.com/aheinzer/ImageImporter#readme"
+    "url": "https://github.com/aheinzer/image-importer/issues"
+  }
 }
