@@ -34,6 +34,8 @@ npm install -g image-importer
 
 ## Start
 
+Hier werden die Fotos vom Desktop + Download-Ordner verarbeitet und in den Fotos Ordner verschoben.
+
 ```bash
-image-importer $HOME/Tresors/Fotos/2021 $HOME/Desktop $HOME/Downloads
+image-importer $HOME/Fotos $HOME/Desktop $HOME/Downloads
 ```
