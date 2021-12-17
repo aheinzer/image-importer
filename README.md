@@ -21,7 +21,7 @@ In this way, images from several SOURCE DIRECTORIES (and devices) can be stored 
 
 ## Prerequisites
 
-- node and npm are installed (https://nodejs.org)
+- node (with included npm) is installed (https://nodejs.org)
 - test with
   - `node -v` 
   - `npm v`
