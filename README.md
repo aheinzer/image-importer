@@ -35,6 +35,8 @@ npm install -g image-importer
 ## Usage
 
 ```bash
+$ image-importer -h
+
 Usage: image-importer [options]
 
 Options:
