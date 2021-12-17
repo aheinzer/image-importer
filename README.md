@@ -48,7 +48,7 @@ Options:
 Here the photos from the desktop + download folder are processed and moved to the photos folder.
 
 ```bash
-john@macbook% node image-importer.js --source $HOME/Downloads $HOME/Desktop --target $HOME/Photos
+john@macbook% image-importer --source $HOME/Downloads $HOME/Desktop --target $HOME/Photos
 
 +----------------+
 | image-importer |
