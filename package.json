@@ -5,7 +5,8 @@
   "main": "image-importer.js",
   "dependencies": {
     "commander": "^8.3.0",
-    "exifreader": "^4.1.0"
+    "exifreader": "^4.1.0",
+    "project-version": "^2.0.0"
   },
   "bin": {
     "image-importer": "./image-importer.js"
