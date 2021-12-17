@@ -10,7 +10,7 @@ In this way, images from several SOURCE DIRECTORIES (and devices) can be stored 
 
 - image-importer is started with the following parameters
   - 1-n SOURCE DIRECTORIES (where the images to be processed are located)
-  - 1 DESTINATION DIRECTORY (where the images are to be copied to)
+  - 1 DESTINATION DIRECTORY (where the images are to be moved to)
 - each JPG image is processed per source directory
   - first the image creation date is read from the image (Exif data)
   - then a folder is created per date in the TARGET DIRECTORY in the format YYYYMMDD
