@@ -61,12 +61,12 @@ source dirs : /Users/john/Downloads, /Users/john/Desktop
 target dir  : /Users/john/Photos
 
 processing /Users/john/Downloads
-- /Users/john/Downloads/DSC0012351.jpg -> /Users/john/Photos/20210106/20210106-102336.jpg
-- /Users/john/Downloads/DSC0012352.jpg -> /Users/john/Photos/20210106/20210106-102420.jpg
-- /Users/john/Downloads/DSC0012353.jpg -> /Users/john/Photos/20210106/20210106-102601.jpg
-- /Users/john/Downloads/DSC0012354.jpg -> /Users/john/Photos/20210106/20210106-104425.jpg
-- /Users/john/Downloads/DSC0012355.jpg -> /Users/john/Photos/20210106/20210106-141907.jpg
-- /Users/john/Downloads/DSC0012356.jpg -> /Users/john/Photos/20210106/20210106-164916.jpg
+- /Users/john/Downloads/DSC01351.jpg -> /Users/john/Photos/20210106/20210106-102336.jpg
+- /Users/john/Downloads/DSC01352.jpg -> /Users/john/Photos/20210106/20210106-102420.jpg
+- /Users/john/Downloads/DSC01353.jpg -> /Users/john/Photos/20210106/20210106-102601.jpg
+- /Users/john/Downloads/DSC01354.jpg -> /Users/john/Photos/20210106/20210106-104425.jpg
+- /Users/john/Downloads/DSC01355.jpg -> /Users/john/Photos/20210106/20210106-141907.jpg
+- /Users/john/Downloads/DSC01356.jpg -> /Users/john/Photos/20210106/20210106-164916.jpg
 
 processing /Users/john/Desktop
 - /Users/john/Desktop/Image01.jpg -> /Users/john/Photos/20210116/20210116-150916.jpg
