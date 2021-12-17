@@ -1,28 +1,28 @@
 # image-importer 
 
-## Beschreibung
+## Introduction
 
-image-importer verschiebt Bilder in ein ZIELVERZEICHNIS und legt diese dort chronologisch mit Datum und Zeit im Ordner- und Bildnamen ab.
+image-importer moves images to a TARGET DIRECTORY and stores them there chronologically with date and time in the folder and image name.
 
-Dadurch können Bilder aus mehrere Quellen und Geräten chronologisch sortiert an einem Ort abgelegt werden.
+In this way, images from several SOURCE DIRECTORIES (and devices) can be stored chronologically sorted in one place.
 
-## Ablauf
+## Process
 
-- image-importer wird mit folgenden Parametern gestartet
-  - 1 ZIELVERZEICHNIS (wo die Bilder hinkopiert werden sollen)
-  - 1-n QUELLVERZEICHNISSEN (wo die zu verarbeitenden Bilder liegen)
-- pro Quellverzeichnis wird jedes JPG-Bild verarbeitet
-  - erst wird das Bild-Erstellungsdatum aus dem Bild ausgelesen (Exif-Daten)
-  - dann wird pro Datum im ZIELVEREICHNIS ein Ordner angelegt im Format YYYYMMDD
-  - dann wird das Bild vom QUELLVERZEICHNIS im ZIELVERZEICHNIS ins Unterverzeichnis YYYYMMDD verschoben
-  - dann wird das Bild umbenannt mit Erstellungsdatum und -zeit im Format YYYYMMDD-HHMMSS.jpg
-  - falls das Bild bereits im ZIELVERZEICHNIS existiert, so werden im Namen noch die aktuellen Millisekunden angehängt im Format YYYYMMDD-HHMMSS-SSS.jpg
-  - pro Bild wird eine Ausgabe geloggt
+- image-importer is started with the following parameters
+  - 1-n SOURCE DIRECTORIES (where the images to be processed are located)
+  - 1 DESTINATION DIRECTORY (where the images are to be copied to)
+- each JPG image is processed per source directory
+  - first the image creation date is read from the image (Exif data)
+  - then a folder is created per date in the TARGET DIRECTORY in the format YYYYMMDD
+  - then the image is moved from the SOURCE DIRECTORIES in the TARGET DIRECTORY to the subdirectory YYYYMMDD
+  - then the image is renamed with creation date and time in the format YYYYMMDD-HHMMSS.jpg
+  - if the image already exists in the TARGET DIRECTORY, the current milliseconds are added to the name in the format YYYYMMDD-HHMMSS-SSS.jpg
+  - one output is logged per image
 
-## Voraussetzungen
+## Prerequisites
 
-- node mit npm sind installiert (https://nodejs.org)
-- testen mit
+- node and npm are installed (https://nodejs.org)
+- test with
   - `node -v` 
   - `npm v`
 
@@ -32,10 +32,41 @@ Dadurch können Bilder aus mehrere Quellen und Geräten chronologisch sortiert a
 npm install -g image-importer
 ```
 
-## Start
-
-Hier werden die Fotos vom Desktop + Download-Ordner verarbeitet und in den Fotos Ordner verschoben.
+## Usage
 
 ```bash
-image-importer $HOME/Fotos $HOME/Desktop $HOME/Downloads
+Usage: image-importer [options]
+
+Options:
+  -s, --source <dirs...>  source dirs with images to process
+  -t, --target <dir>      target dir for processed images to move
+  -h, --help              display help for command
+```
+
+## Example
+
+Here the photos from the desktop + download folder are processed and moved to the photos folder.
+
+```bash
+john@macbook% node image-importer.js --source $HOME/Downloads $HOME/Desktop --target $HOME/Photos
+
++----------------+
+| image-importer |
++----------------+
+
+source dirs : /Users/john/Downloads, /Users/john/Desktop
+target dir  : /Users/john/Photos
+
+processing /Users/john/Downloads
+- /Users/john/Downloads/20210106-102336.jpg -> /Users/john/Photos/20210106/20210106-102336.jpg
+- /Users/john/Downloads/20210106-102420.jpg -> /Users/john/Photos/20210106/20210106-102420.jpg
+- /Users/john/Downloads/20210106-102601.jpg -> /Users/john/Photos/20210106/20210106-102601.jpg
+- /Users/john/Downloads/20210106-104425.jpg -> /Users/john/Photos/20210106/20210106-104425.jpg
+- /Users/john/Downloads/20210106-141907.jpg -> /Users/john/Photos/20210106/20210106-141907.jpg
+- /Users/john/Downloads/20210106-164916.jpg -> /Users/john/Photos/20210106/20210106-164916.jpg
+
+processing /Users/john/Desktop
+- /Users/john/Desktop/20210116-150916.jpg -> /Users/john/Photos/20210116/20210116-150916.jpg
+- /Users/john/Desktop/20210116-151308.jpg -> /Users/john/Photos/20210116/20210116-151308.jpg
+- /Users/john/Desktop/20210116-151331.jpg -> /Users/john/Photos/20210116/20210116-151331.jpg
 ```

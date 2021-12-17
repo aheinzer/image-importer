@@ -1,32 +1,22 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const exifReader = require('exifreader');
+import fs from 'fs';
+import exifReader from 'exifreader';
+import { Command } from 'commander/esm.mjs';
 
+const { sourceDirs, targetDir } = processArgs(process.argv);
 const imageSuffix = 'jpg';
 
-const args = pgmArgs();
-
-if (args.length < 2) {
-  console.log(
-    `Mindestens 2 Argumente notwendig (args = ${args}): DEST_DIR SOURCE_DIRS ...`
-  );
-  process.exit(2);
-}
-
-const [destDir, ...sourceDirs] = args;
-
 console.log(`
-${boxedTitle(pgmName())}
+${boxedTitle('image-importer')}
 
-destination dir: ${destDir}
-source dirs    : ${sourceDirs.join(', ')}
+source dirs : ${sourceDirs.join(', ')}
+target dir  : ${targetDir}
 `);
 
-for (sourceDir of sourceDirs) {
+for (let sourceDir of sourceDirs) {
   if (isDir(sourceDir)) {
-    console.log(sourceDir);
+    console.log('processing ' + sourceDir);
 
     fs.readdirSync(sourceDir)
       .filter((sourceFile) => isImage(sourceFile))
@@ -46,42 +36,64 @@ for (sourceDir of sourceDirs) {
         }
         const date = dateTime.substring(0, 8);
 
-        const destDirWithDate = destDir + '/' + date;
-        const destFilePathWithoutSuffix = destDirWithDate + '/' + dateTime;
+        const targetDirWithDate = targetDir + '/' + date;
+        const targetFilePathWithoutSuffix = targetDirWithDate + '/' + dateTime;
 
-        createDirIfNotExists(destDirWithDate);
+        createDirIfNotExists(targetDirWithDate);
 
-        const destFilePathOrError = moveFileWithStatus(
+        const targetFilePathOrError = moveFileWithStatus(
           sourceFilePath,
-          destFilePathWithoutSuffix,
+          targetFilePathWithoutSuffix,
           imageSuffix
         );
 
-        console.log(`- ${sourceFilePath} -> ${destFilePathOrError}`);
+        console.log(`- ${sourceFilePath} -> ${targetFilePathOrError}`);
       });
   } else {
-    console.log(`Warnung - Verzeichnis ${dir} nicht gefunden`);
+    console.log(`Warning - Dir ${dir} not found`);
   }
+  console.log('');
+}
+
+function processArgs(args) {
+  const program = new Command();
+  program
+    .requiredOption(
+      '-s, --source <dirs...>',
+      'source dirs with images to process'
+    )
+    .requiredOption(
+      '-t, --target <dir>',
+      'target dir for processed images to move'
+    )
+    .parse(args);
+
+  const options = program.opts();
+
+  return {
+    sourceDirs: options.source,
+    targetDir: options.target,
+  };
 }
 
 function moveFileWithStatus(
   sourceFilePath,
-  destFilePathWithoutSuffix,
+  targetFilePathWithoutSuffix,
   imageSuffix
 ) {
-  const destFilePath = destFilePathWithoutSuffix + '.' + imageSuffix;
+  const targetFilePath = targetFilePathWithoutSuffix + '.' + imageSuffix;
 
   try {
-    if (!fs.existsSync(destFilePath)) {
-      fs.renameSync(sourceFilePath, destFilePath);
-      return destFilePath;
+    if (!fs.existsSync(targetFilePath)) {
+      fs.renameSync(sourceFilePath, targetFilePath);
+      return targetFilePath;
     } else {
       const date = new Date();
       const milliseconds = date.getMilliseconds();
-      const destFilePathWithMilliseconds =
-        destFilePathWithoutSuffix + '-' + milliseconds + '.' + imageSuffix;
-      fs.renameSync(sourceFilePath, destFilePathWithMilliseconds);
-      return destFilePathWithMilliseconds;
+      const targetFilePathWithMilliseconds =
+        targetFilePathWithoutSuffix + '-' + milliseconds + '.' + imageSuffix;
+      fs.renameSync(sourceFilePath, targetFilePathWithMilliseconds);
+      return targetFilePathWithMilliseconds;
     }
   } catch (e) {
     return e.message;
@@ -115,14 +127,6 @@ function createDirIfNotExists(dir) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
-}
-
-function pgmName() {
-  return path.basename(__filename);
-}
-
-function pgmArgs() {
-  return process.argv.slice(2);
 }
 
 function boxedTitle(title) {

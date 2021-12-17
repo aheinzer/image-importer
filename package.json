@@ -4,6 +4,7 @@
   "description": "Rename and Move Image Files",
   "main": "image-importer.js",
   "dependencies": {
+    "commander": "^8.3.0",
     "exifreader": "^4.1.0"
   },
   "bin": {
@@ -13,6 +14,7 @@
     "type": "git",
     "url": "https://github.com/aheinzer/image-importer.git"
   },
+  "type": "module",
   "author": "Armin Heinzer",
   "license": "ISC",
   "bugs": {
