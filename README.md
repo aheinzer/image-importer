@@ -40,7 +40,6 @@ $ image-importer -h
 Usage: image-importer [options]
 
 Options:
-  -V, --version           output the version number
   -s, --source <dirs...>  source dirs with images to process
   -t, --target <dir>      target dir for processed images to move
   -h, --help              display help for command

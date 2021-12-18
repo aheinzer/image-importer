@@ -3,7 +3,6 @@
 import fs from 'fs';
 import exifReader from 'exifreader';
 import { Command } from 'commander/esm.mjs';
-import projectVersion from 'project-version';
 
 const { sourceDirs, targetDir } = processArgs(process.argv);
 const imageSuffix = 'jpg';
@@ -59,7 +58,6 @@ for (let sourceDir of sourceDirs) {
 function processArgs(args) {
   const program = new Command();
   program
-    .version(projectVersion)
     .requiredOption(
       '-s, --source <dirs...>',
       'source dirs with images to process'
