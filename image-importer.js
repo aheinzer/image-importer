@@ -3,6 +3,10 @@
 import fs from 'fs';
 import exifReader from 'exifreader';
 import { Command } from 'commander/esm.mjs';
+import { readFile } from 'fs/promises';
+const pkg = JSON.parse(
+  await readFile(new URL('./package.json', import.meta.url))
+);
 
 const { sourceDirs, targetDir } = processArgs(process.argv);
 const imageSuffix = 'jpg';
@@ -66,6 +70,7 @@ function processArgs(args) {
       '-t, --target <dir>',
       'target dir for processed images to move'
     )
+    .version(pkg.version, '-v, --version')
     .parse(args);
 
   const options = program.opts();

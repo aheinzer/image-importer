@@ -42,6 +42,7 @@ Usage: image-importer [options]
 Options:
   -s, --source <dirs...>  source dirs with images to process
   -t, --target <dir>      target dir for processed images to move
+  -v, --version           output the version number
   -h, --help              display help for command
 ```
 
