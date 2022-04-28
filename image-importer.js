@@ -9,7 +9,7 @@ const pkg = JSON.parse(
 );
 
 const { sourceDirs, targetDir } = processArgs(process.argv);
-const imageSuffix = 'jpg';
+const imageSuffixes = ['jpg', 'jpeg'];
 
 console.log(`
 ${boxedTitle('image-importer')}
@@ -23,7 +23,7 @@ for (let sourceDir of sourceDirs) {
     console.log('processing ' + sourceDir);
 
     fs.readdirSync(sourceDir)
-      .filter((sourceFile) => isImage(sourceFile))
+      .filter((sourceFile) => isImage(sourceFile, imageSuffixes))
       .forEach((sourceFile) => {
         const sourceFilePath = sourceDir + '/' + sourceFile;
 
@@ -48,7 +48,7 @@ for (let sourceDir of sourceDirs) {
         const targetFilePathOrError = moveFileWithStatus(
           sourceFilePath,
           targetFilePathWithoutSuffix,
-          imageSuffix
+          imageSuffixes
         );
 
         console.log(`- ${sourceFilePath} -> ${targetFilePathOrError}`);
@@ -84,24 +84,26 @@ function processArgs(args) {
 function moveFileWithStatus(
   sourceFilePath,
   targetFilePathWithoutSuffix,
-  imageSuffix
+  imageSuffixes
 ) {
-  const targetFilePath = targetFilePathWithoutSuffix + '.' + imageSuffix;
+  for (let imageSuffix of imageSuffixes) {
+    const targetFilePath = targetFilePathWithoutSuffix + '.' + imageSuffix;
 
-  try {
-    if (!fs.existsSync(targetFilePath)) {
-      fs.renameSync(sourceFilePath, targetFilePath);
-      return targetFilePath;
-    } else {
-      const date = new Date();
-      const milliseconds = date.getMilliseconds();
-      const targetFilePathWithMilliseconds =
-        targetFilePathWithoutSuffix + '-' + milliseconds + '.' + imageSuffix;
-      fs.renameSync(sourceFilePath, targetFilePathWithMilliseconds);
-      return targetFilePathWithMilliseconds;
+    try {
+      if (!fs.existsSync(targetFilePath)) {
+        fs.renameSync(sourceFilePath, targetFilePath);
+        return targetFilePath;
+      } else {
+        const date = new Date();
+        const milliseconds = date.getMilliseconds();
+        const targetFilePathWithMilliseconds =
+          targetFilePathWithoutSuffix + '-' + milliseconds + '.' + imageSuffix;
+        fs.renameSync(sourceFilePath, targetFilePathWithMilliseconds);
+        return targetFilePathWithMilliseconds;
+      }
+    } catch (e) {
+      return e.message;
     }
-  } catch (e) {
-    return e.message;
   }
 }
 
@@ -113,8 +115,10 @@ function isDir(path) {
   }
 }
 
-function isImage(file) {
-  return file.toLowerCase().endsWith(imageSuffix);
+function isImage(file, imageSuffixes) {
+  return imageSuffixes.some((imageSuffix) =>
+    file.toLowerCase().endsWith(imageSuffix)
+  );
 }
 
 function exifDateTime(file) {
